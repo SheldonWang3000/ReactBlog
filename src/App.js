@@ -1,8 +1,26 @@
 import React from 'react'
-import Detail from './Detail'
+import { 
+    Route,
+    Switch, 
+    BrowserRouter as Router 
+} from 'react-router-dom'
+
+
+import BlogList from './BlogList'
+import Detail from "./Detail"
+
 function App() {
     return (
-        <Detail />
+        <Router>
+            <Switch>
+                <Route path="/posts/:id">
+                    <Detail/>
+                </Route>
+                <Route path="/">
+                    <BlogList/>
+                </Route>
+            </Switch>
+        </Router>
     );
 }
 

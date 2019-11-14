@@ -54,10 +54,6 @@ function Detail(props) {
                 if (response.status === 200) {
                     return response.data;
                 }
-
-                if (response.status === 404) {
-                    return {};
-                }
             })
             .then((data) => {
                 setAttri({
@@ -67,9 +63,12 @@ function Detail(props) {
                 });
            })
             .catch((error) => {
-                console.log(error);
+                // console.log(error.response);
+                if (error.response.status === 404) {
+                    history.push('/404');
+                }
             });
-    },[id]);
+    },[id, history]);
     return (
         <div>
             <Paper className={classes.root}>

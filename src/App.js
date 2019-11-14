@@ -8,6 +8,7 @@ import {
 
 import BlogList from './BlogList'
 import Detail from "./Detail"
+import NotFoundPage from './NotFoundPage'
 
 function App() {
     return (
@@ -16,8 +17,11 @@ function App() {
                 <Route path="/posts/:id">
                     <Detail/>
                 </Route>
-                <Route path="/">
+                <Route exact path="/">
                     <BlogList/>
+                </Route>
+                <Route path="/404">
+                    <NotFoundPage/>
                 </Route>
             </Switch>
         </Router>

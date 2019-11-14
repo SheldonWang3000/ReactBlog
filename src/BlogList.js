@@ -33,12 +33,15 @@ function Item(props) {
 }
 
 function BlogList(props) {
-    console.log("BlogList");
-    const [blogArray, setBlogArray] = useState([]);
-    const [blogNum, setBlogNum] = useState(5);
-    const [pageSize, setPageSize] = useState(1);
+
+    const [attri, setAttri] = useState({
+        blogArray: [],
+        blogNum: 5,
+        pageSize: 1
+    });
 
     const url = globalVariable.host + "/api/v1/list/?page=" + (props.homePagination + 1);
+
     useEffect(() => {
         axios.get(url)
             .then((response) => {
@@ -47,9 +50,11 @@ function BlogList(props) {
                 }
             })
             .then((data) => {
-                setBlogArray(data.results);
-                setBlogNum(data.count);
-                setPageSize(data.page_size);
+                setAttri({
+                    blogArray: data.results,
+                    blogNum: data.count,
+                    pageSize: data.page_size
+                });
             })
             .catch((error) => {
                 console.log(error);
@@ -62,7 +67,7 @@ function BlogList(props) {
                 direction="column"
                 alignItems="stretch">
                 <Grid item>
-                    {blogArray.map((value, index) => {
+                    {attri.blogArray.map((value, index) => {
                         return <Item key={index}
                             id={value.id}
                             title={value.title}
@@ -75,8 +80,8 @@ function BlogList(props) {
             <TablePagination
                 component="div"
                 rowsPerPageOptions={[]}
-                rowsPerPage={pageSize}
-                count={blogNum}
+                rowsPerPage={attri.pageSize}
+                count={attri.blogNum}
                 page={props.homePagination}
                 onChangePage={(event, newPage) => {
                     if (newPage > props.homePagination) {

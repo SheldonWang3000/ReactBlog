@@ -36,7 +36,7 @@ function BlogList(props) {
 
     const [attri, setAttri] = useState({
         blogArray: [],
-        blogNum: 5,
+        blogNum: 1,
         pageSize: 1
     });
 
@@ -66,16 +66,13 @@ function BlogList(props) {
             <Grid container
                 direction="column"
                 alignItems="stretch">
-                <Grid item>
-                    {attri.blogArray.map((value, index) => {
-                        return <Item key={index}
-                            id={value.id}
-                            title={value.title}
-                            publishDate={value.publish_date}
-                            url={value.url}
-                        />;
-                    })}
-                </Grid>
+                {attri.blogArray.map((value, index) => {
+                    return <Item key={index}
+                        id={value.id}
+                        title={value.title}
+                        publishDate={value.publish_date}
+                    />;
+                })}
             </Grid>
             <TablePagination
                 component="div"

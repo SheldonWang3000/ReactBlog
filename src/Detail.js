@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from "react-router-dom";
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
-import 'typeface-roboto';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';

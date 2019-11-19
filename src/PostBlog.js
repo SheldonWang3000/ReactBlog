@@ -1,44 +1,6 @@
-// import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-// import { Editor } from 'slate-react';
-// import { Value } from 'slate';
-
-
-// const initialValue = Value.fromJSON({
-//     document: {
-//         nodes: [
-//             {
-//                 object: 'block',
-//                 type: 'paragraph',
-//                 nodes: [
-//                     {
-//                         object: 'text',
-//                         text: 'A line of text in a paragraph.',
-//                     },
-//                 ],
-//             },
-//         ],
-//     },
-// })
-
-// function CreateBlog(props) {
-//     const [content, setContent] = useState(initialValue);
-//     const onChange = (editor) => {
-//         console.log(editor.value);
-//         setContent(editor.value);
-//     };
-//     return(
-//         <Editor 
-//             spellCheck
-//             autoFocus 
-//             value={content} 
-//             onChange={onChange} />
-//     );
-// }
-
-// export default CreateBlog;
-
-import React, { useState } from 'react';
+import { useParams, useHistory } from "react-router-dom";
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -53,42 +15,83 @@ import { globalVariable } from './GlobalVariable'
 
 const useStyles = makeStyles(theme => ({
     textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
     },
     button: {
         margin: theme.spacing(1),
     },
-  }));
+}));
 
 
-//   curl -d "title=post&content=content&user=1" -X POST http://localhost:8000/api/v1/posts/
-
-function CreateBlog(props) {
+function PostBlog(props) {
+    const { id } = useParams();
+    const history = useHistory();
     const classes = useStyles();
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("You have created blog successfully!")
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [buttonMsg, setButtonMsg] = useState("post");
 
     const handleAlertClose = () => {
         setAlertOpen(false);
     }
 
+    useEffect(()=>{
+        if (id !== undefined) {
+            const url = globalVariable.host + "/api/v1/posts/" + id;
+            setButtonMsg("update");
+            axios.get(url)
+                .then((response) => {
+                    if (response.status === 200) {
+                        return response.data;
+                    }
+                })
+                .then((data) => {
+                    setTitle(data.title);
+                    setContent(data.content);
+                })
+                .catch((error) => {
+                    // console.log(error.response);
+                    if (error.response.status === 404) {
+                        history.push('/404');
+                    }
+                });
+        }
+        
+    }, [id, history]);
+
     const postFunc = () => {
-        const url = globalVariable.host + "/api/v1/posts/";
-        axios.post(url, {
-            title: title,
-            content: content,
-            user: 1
-        }).then((response)=>{
-            setAlertMessage("You have created blog successfully!");
-            setAlertOpen(true);
-        }).catch((e)=>{
-            console.log(e);
-            setAlertMessage("You have failed to create the blog");
-            setAlertOpen(true);
-        });
+        if (buttonMsg === "post") {
+            const url = globalVariable.host + "/api/v1/posts/";
+            axios.post(url, {
+                title: title,
+                content: content,
+                user: 1
+            }).then((response) => {
+                setAlertMessage("You have created blog successfully!");
+                setAlertOpen(true);
+            }).catch((e) => {
+                console.log(e);
+                setAlertMessage("You have failed to create the blog");
+                setAlertOpen(true);
+            });
+        }
+        if (buttonMsg === "update") {
+            const url = globalVariable.host + "/api/v1/posts/" + id + "/";
+            axios.put(url, {
+                title: title,
+                content: content
+            }).then((response)=>{
+                setAlertMessage("You have updated blog successfully!");
+                setAlertOpen(true);
+            }).catch((e)=>{
+                console.loe(e);
+                setAlertMessage("You have failed to update the blog");
+                setAlertOpen(true)
+            });
+        }
     }
 
     return (
@@ -100,6 +103,7 @@ function CreateBlog(props) {
                 className={classes.textField}
                 margin="normal"
                 variant="outlined"
+                value={title}
                 onChange={(event) => {
                     setTitle(event.target.value);
                 }}
@@ -113,6 +117,7 @@ function CreateBlog(props) {
                 className={classes.textField}
                 margin="normal"
                 variant="outlined"
+                value={content}
                 onChange={(event) => {
                     setContent(event.target.value);
                 }}
@@ -120,7 +125,7 @@ function CreateBlog(props) {
             <Button 
                 variant="contained" color="primary" className={classes.button}
                 onClick={postFunc} >
-                Post 
+                {buttonMsg} 
             </Button>
 
             <Dialog
@@ -143,4 +148,4 @@ function CreateBlog(props) {
     );
 }
 
-export default CreateBlog;
+export default PostBlog;

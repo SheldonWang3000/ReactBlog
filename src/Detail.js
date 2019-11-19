@@ -12,11 +12,13 @@ import "highlight.js/styles/github.css";
 
 const useStyles = makeStyles(theme => ({
     root: {
+        margin: theme.spacing(5, 5, 1, 5)
+    },
+    paper: {
         padding: theme.spacing(3, 2),
-        margin: theme.spacing(10, 10, 1, 10)
     },
     button: {
-        margin: theme.spacing(1, 10),
+        margin: theme.spacing(1, 1, 1, 0),
     },
     input: {
         display: 'none',
@@ -29,8 +31,8 @@ function Detail(props) {
     const [deleteId, setDeleteId] = useState(-1);
     const [attri, setAttri] = useState({
         publishDate: "",
-        title: "Title",
-        content: "Content"
+        title: "",
+        content: ""
     });
 
     const classes = useStyles();
@@ -77,8 +79,8 @@ function Detail(props) {
             });
     },[id, history]);
     return (
-        <div>
-            <Paper className={classes.root}>
+        <div className={classes.root}>
+            <Paper className={classes.paper}>
                 <Typography variant="h3" component="h3">
                     {attri.title}
                 </Typography>
@@ -96,6 +98,13 @@ function Detail(props) {
                     setDeleteId(id);
                 }} >
                 Delete
+            </Button>
+            <Button 
+                variant="contained" color="primary" className={classes.button}
+                onClick={() => {
+                    history.push("/post/" + id + "/");
+                }} >
+                Update 
             </Button>
         </div>
     );

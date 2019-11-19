@@ -1,5 +1,6 @@
 import React from 'react'
 import { 
+    Redirect,
     Route,
     Switch, 
     BrowserRouter as Router 
@@ -9,7 +10,7 @@ import {
 import BlogList from './BlogList'
 import Detail from "./Detail"
 import NotFoundPage from './NotFoundPage'
-import CreateBlog from './CreateBlog'
+import PostBlog from './PostBlog'
 import Test from './Test'
 
 function App() {
@@ -25,12 +26,16 @@ function App() {
                 <Route path="/404">
                     <NotFoundPage/>
                 </Route>
-                <Route path="/create">
-                    <CreateBlog/>
+                {/* <Route path="/create">
+                    <PostBlog/>
+                </Route> */}
+                <Route path="/post/:id?">
+                    <PostBlog/>
                 </Route>
                 <Route path="/test">
                     <Test/>
                 </Route>
+                <Redirect to='/404'/>
             </Switch>
         </Router>
     );

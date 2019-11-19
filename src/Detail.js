@@ -5,8 +5,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
+import ReactMarkdown from 'react-markdown';
 import { globalVariable } from "./GlobalVariable";
+import hljs from 'highlight.js'
+import "highlight.js/styles/github.css";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -32,6 +34,12 @@ function Detail(props) {
     });
 
     const classes = useStyles();
+
+    useEffect(()=>{
+        hljs.initHighlighting.called = false;
+        hljs.initHighlighting();
+    }, [attri]);
+
     useEffect(() => {
         if (deleteId !== -1) {
             axios.delete(globalVariable.host + "/api/v1/posts/" + deleteId)
@@ -78,8 +86,8 @@ function Detail(props) {
                     Publish Date:  {attri.publishDate}
                 </Typography>
                 <br />
-                <Typography component="p">
-                    {attri.content}
+                <Typography component="div">
+                    <ReactMarkdown source={attri.content} />
                 </Typography>
             </Paper>
             <Button 

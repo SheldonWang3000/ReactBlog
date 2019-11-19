@@ -10,6 +10,7 @@ import BlogList from './BlogList'
 import Detail from "./Detail"
 import NotFoundPage from './NotFoundPage'
 import CreateBlog from './CreateBlog'
+import Test from './Test'
 
 function App() {
     return (
@@ -26,6 +27,9 @@ function App() {
                 </Route>
                 <Route path="/create">
                     <CreateBlog/>
+                </Route>
+                <Route path="/test">
+                    <Test/>
                 </Route>
             </Switch>
         </Router>

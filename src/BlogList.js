@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { Paper } from '@material-ui/core';
 import { TablePagination } from '@material-ui/core';
-import { globalVariable } from './GlobalVariable'
-import { homePageNext, homePagePrev } from './redux/actions'
+import { globalVariable } from './GlobalVariable';
+import { homePageNext, homePagePrev } from './redux/actions';
 
 const useStyles = makeStyles(theme => ({
     item: {
@@ -89,6 +89,7 @@ function BlogList(props) {
                     }
                 }}
             />
+            <Link to='/test'>test</Link>
         </div>
     )
 }

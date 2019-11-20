@@ -1,17 +1,18 @@
-import React from 'react'
+import React from 'react';
 import { 
     Redirect,
     Route,
     Switch, 
     BrowserRouter as Router 
-} from 'react-router-dom'
+} from 'react-router-dom';
 
 
-import BlogList from './BlogList'
-import Detail from "./Detail"
-import NotFoundPage from './NotFoundPage'
-import PostBlog from './PostBlog'
-import Test from './Test'
+import BlogList from './BlogList';
+import Detail from "./Detail";
+import NotFoundPage from './NotFoundPage';
+import PostBlog from './PostBlog';
+import Test from './Test';
+import Login from './Login';
 
 function App() {
     return (
@@ -26,14 +27,11 @@ function App() {
                 <Route path="/404">
                     <NotFoundPage/>
                 </Route>
-                {/* <Route path="/create">
-                    <PostBlog/>
-                </Route> */}
                 <Route path="/post/:id?">
                     <PostBlog/>
                 </Route>
                 <Route path="/test">
-                    <Test/>
+                    <Login/>
                 </Route>
                 <Redirect to='/404'/>
             </Switch>

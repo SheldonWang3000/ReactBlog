@@ -4,11 +4,13 @@ import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import ReactMarkdown from 'react-markdown';
 import { globalVariable } from "./GlobalVariable";
 import hljs from 'highlight.js'
 import "highlight.js/styles/github.css";
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -19,9 +21,6 @@ const useStyles = makeStyles(theme => ({
     },
     button: {
         margin: theme.spacing(1, 1, 1, 0),
-    },
-    input: {
-        display: 'none',
     },
 }));
 
@@ -34,6 +33,14 @@ function Detail(props) {
         title: "",
         content: ""
     });
+    const [showButtons, setShowButtons] = useState(false);
+    useEffect(()=>{
+        if (props.access_token !== "" && props.refresh_token !== "") {
+            setShowButtons(true);
+        } else {
+            setShowButtons(false);
+        }
+    }, [props]);
 
     const classes = useStyles();
 
@@ -92,22 +99,29 @@ function Detail(props) {
                     <ReactMarkdown source={attri.content} />
                 </Typography>
             </Paper>
-            <Button 
-                variant="contained" color="secondary" className={classes.button}
-                onClick={() => {
-                    setDeleteId(id);
-                }} >
-                Delete
-            </Button>
-            <Button 
-                variant="contained" color="primary" className={classes.button}
-                onClick={() => {
-                    history.push("/post/" + id + "/");
-                }} >
-                Update 
-            </Button>
+            <Hidden lgDown={!showButtons}>
+                <Button
+                    variant="contained" color="secondary" className={classes.button}
+                    onClick={() => {
+                        setDeleteId(id);
+                    }} >
+                    Delete
+                </Button>
+                <Button
+                    variant="contained" color="primary" className={classes.button}
+                    onClick={() => {
+                        history.push("/post/" + id + "/");
+                    }} >
+                    Update
+                </Button>
+            </Hidden>
         </div>
     );
 }
+// Map Redux state to component props
+function mapStateToProps(state) {
+    return state.loginToken;
+}
 
-export default Detail;
+// Connected Component
+export default connect(mapStateToProps)(Detail);

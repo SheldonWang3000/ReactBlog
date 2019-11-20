@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Redirect } from "react-router-dom";
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -12,6 +12,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 
 import axios from 'axios';
 import { globalVariable } from './GlobalVariable'
+
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
     textField: {
@@ -33,6 +35,7 @@ function PostBlog(props) {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [buttonMsg, setButtonMsg] = useState("post");
+
 
     const handleAlertClose = () => {
         setAlertOpen(false);
@@ -69,6 +72,8 @@ function PostBlog(props) {
                 title: title,
                 content: content,
                 user: 1
+            }, {
+                headers: {'Authorization': "Bearer " + props.access_token}
             }).then((response) => {
                 setAlertMessage("You have created blog successfully!");
                 setAlertOpen(true);
@@ -87,12 +92,14 @@ function PostBlog(props) {
                 setAlertMessage("You have updated blog successfully!");
                 setAlertOpen(true);
             }).catch((e)=>{
-                console.loe(e);
+                console.log(e);
                 setAlertMessage("You have failed to update the blog");
                 setAlertOpen(true)
             });
         }
     }
+
+    if (props.access_token === "") return <Redirect to='/'/>;
 
     return (
         <div>
@@ -147,5 +154,10 @@ function PostBlog(props) {
         </div>
     );
 }
+// Map Redux state to component props
+function mapStateToProps(state) {
+    return state.loginToken;
+}
 
-export default PostBlog;
+// Connected Component
+export default connect(mapStateToProps)(PostBlog);

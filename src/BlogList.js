@@ -36,11 +36,11 @@ function BlogList(props) {
 
     const [attri, setAttri] = useState({
         blogArray: [],
-        blogNum: 1,
-        pageSize: 1
+        blogNum: 0,
+        pageSize: 0
     });
 
-    const url = globalVariable.host + "/api/v1/list/?page=" + (props.homePagination + 1);
+    const url = globalVariable.host + "/api/v1/list/?page=" + (props.currentPageNum + 1);
 
     useEffect(() => {
         axios.get(url)
@@ -79,9 +79,9 @@ function BlogList(props) {
                 rowsPerPageOptions={[]}
                 rowsPerPage={attri.pageSize}
                 count={attri.blogNum}
-                page={props.homePagination}
+                page={attri.blogNum * attri.pageSize === 0 ? 0 : props.currentPageNum}
                 onChangePage={(event, newPage) => {
-                    if (newPage > props.homePagination) {
+                    if (newPage > props.currentPageNum) {
                         props.homePageNext();
                     }
                     else {
@@ -90,13 +90,15 @@ function BlogList(props) {
                 }}
             />
             <Link to='/test'>test</Link>
+            <br/>
+            <Link to='/post/'>create</Link>
         </div>
     )
 }
 
 // Map Redux state to component props
 function mapStateToProps(state) {
-  return state;
+  return state.homePagination;
 }
 
 // Map Redux actions to component props

@@ -1,21 +1,43 @@
 import { combineReducers } from "redux";
-import { HOME_PAGE_NEXT, HOME_PAGE_PREV } from './actionTypes'
+import { 
+    HOME_PAGE_NEXT, 
+    HOME_PAGE_PREV,
+    UPDATE_TOKEN,
+    CLEAR_TOKEN,
+} from './actionTypes'
 
-const initialState = 0;
-
-function homePagination(state = initialState, action) {
+function homePagination(state = { currentPageNum: 0 }, action) {
     switch (action.type) {
         case HOME_PAGE_NEXT: {
-            return state + 1;
+            return Object.assign({}, state, {currentPageNum: state.currentPageNum + 1});
         }
         case HOME_PAGE_PREV: {
-            return state - 1 < 0 ? 0 : state - 1;
+            return Object.assign({}, state, {currentPageNum: state.currentPageNum < 0 ? 0 : state.currentPageNum - 1});
         }
         default: {
             return state;
         }
     }
-
 }
 
-export default combineReducers({ homePagination });
+function loginToken(state = { access_token: "", refresh_token: "" }, action) {
+    switch (action.type) {
+        case UPDATE_TOKEN: {
+            return {
+                access_token: action.access_token,
+                refresh_token: action.refresh_token,
+            };
+        }
+        case CLEAR_TOKEN: {
+            return {
+                access_token: "",
+                refresh_token: "",
+            };
+        }
+        default: {
+            return state;
+        }
+    }
+}
+
+export default combineReducers({ homePagination, loginToken });

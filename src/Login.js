@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
-import axios from 'axios';
-
-import { globalVariable } from './GlobalVariable';
+import { axiosInstance } from './Global';
 
 import { connect } from 'react-redux';
-import { updateToken, clearToken } from './redux/actions';
+import { updateToken } from './redux/actions';
 
 import { useHistory } from 'react-router-dom';
 
@@ -25,20 +23,29 @@ function Login(props) {
     const [password, setPassword] = useState("");
     const classes = useStyles();
     const loginFunc = () => {
-        const url = globalVariable.host + "/api/token/";
-            axios.post(url, {
+        const url = "/token/";
+            axiosInstance.post(url, {
                 username: username,
                 password: password
             }).then((response) => {
-                props.updateToken(response.data.refresh, response.data.access);
-                history.push('/');
+                props.updateToken(response.data.refresh);
+                console.log("refresh");
+                console.log(response.data.refresh);
+                console.log("access");
+                console.log(response.data.access);
+
+                axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.access;
+                if (history.location.state === undefined || history.location.state.from === undefined || history.location.state.from === "") {
+                    history.replace("/dashboard");
+                } else {
+                    history.replace({
+                        pathname: history.location.state.from, 
+                        state: {}});
+                }
             }).catch((e) => {
                 console.log(e);
             });
     };
-    useEffect(()=>{
-        console.log(props.access_token);
-    }, [props]);
     return (
         <div>
             <input id="username_input" onChange={(event)=>{
@@ -64,7 +71,6 @@ function mapStateToProps(state) {
 // Map Redux actions to component props
 const mapDispatchToProps = {
     updateToken,
-    clearToken,
 }
 
 // Connected Component

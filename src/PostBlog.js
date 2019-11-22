@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { useParams, useHistory, Redirect } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -10,8 +10,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
-import axios from 'axios';
-import { globalVariable } from './GlobalVariable'
+import { axiosInstance } from './Global'
 
 import { connect } from 'react-redux';
 
@@ -39,13 +38,14 @@ function PostBlog(props) {
 
     const handleAlertClose = () => {
         setAlertOpen(false);
+        history.push('/');
     }
 
     useEffect(()=>{
         if (id !== undefined) {
-            const url = globalVariable.host + "/api/v1/posts/" + id;
+            const url = `/posts/${id}`;
             setButtonMsg("update");
-            axios.get(url)
+            axiosInstance.get(url)
                 .then((response) => {
                     if (response.status === 200) {
                         return response.data;
@@ -56,7 +56,7 @@ function PostBlog(props) {
                     setContent(data.content);
                 })
                 .catch((error) => {
-                    // console.log(error.response);
+                    console.log(error);
                     if (error.response.status === 404) {
                         history.push('/404');
                     }
@@ -67,14 +67,13 @@ function PostBlog(props) {
 
     const postFunc = () => {
         if (buttonMsg === "post") {
-            const url = globalVariable.host + "/api/v1/posts/";
-            axios.post(url, {
+            const url = "/posts/";
+            axiosInstance.post(url, {
                 title: title,
                 content: content,
                 user: 1
-            }, {
-                headers: {'Authorization': "Bearer " + props.access_token}
-            }).then((response) => {
+            }
+            ).then((response) => {
                 setAlertMessage("You have created blog successfully!");
                 setAlertOpen(true);
             }).catch((e) => {
@@ -84,8 +83,8 @@ function PostBlog(props) {
             });
         }
         if (buttonMsg === "update") {
-            const url = globalVariable.host + "/api/v1/posts/" + id + "/";
-            axios.put(url, {
+            const url = `/posts/${id}/`;
+            axiosInstance.put(url, {
                 title: title,
                 content: content
             }).then((response)=>{
@@ -98,8 +97,6 @@ function PostBlog(props) {
             });
         }
     }
-
-    if (props.access_token === "") return <Redirect to='/'/>;
 
     return (
         <div>

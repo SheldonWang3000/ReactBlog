@@ -1,16 +1,21 @@
-import React, { useEffect } from 'react';
-import ReactMarkdown from 'react-markdown';
-import hljs from 'highlight.js'
-import "highlight.js/styles/github.css";
+import React from 'react';
 
-function Test(props) {
-    const md = "```javascript\n var a = 1;\n```";
-    useEffect(()=>{
-        hljs.initHighlighting.called = false;
-        hljs.initHighlighting();
-    }, []);
+export function Parent(props) {
+    let content;
+    if (false) {
+        content = props.children;
+    } else {
+        content = (<div>Parent</div>);
+    }
     return (
-        <ReactMarkdown source={md}/>
+        <div>
+            {content}
+        </div>
     );
 }
-export default Test;
+export function Test(props) {
+    console.log(props.children);
+    return (
+        <div>TEST</div>
+    );
+}

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { Paper } from '@material-ui/core';
 import { TablePagination } from '@material-ui/core';
-import { globalVariable } from './GlobalVariable';
+import { axiosInstance } from './Global';
 import { homePageNext, homePagePrev } from './redux/actions';
 
 const useStyles = makeStyles(theme => ({
@@ -20,7 +19,7 @@ function Item(props) {
     const classes = useStyles();
     return (
         <Paper className={classes.item}>
-            <Link to={'/posts/' + props.id + "/"}>
+            <Link to={`/posts/${props.id}/`}>
                 <Typography variant='h6'>
                     {props.title}
                 </Typography>
@@ -40,10 +39,10 @@ function BlogList(props) {
         pageSize: 0
     });
 
-    const url = globalVariable.host + "/api/v1/list/?page=" + (props.currentPageNum + 1);
+    const url = `/list/?page=${props.currentPageNum + 1}`;
 
     useEffect(() => {
-        axios.get(url)
+        axiosInstance.get(url)
             .then((response) => {
                 if (response.status === 200) {
                     return response.data;

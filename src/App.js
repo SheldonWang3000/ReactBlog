@@ -3,16 +3,18 @@ import {
     Redirect,
     Route,
     Switch, 
-    BrowserRouter as Router 
+    BrowserRouter as Router,
 } from 'react-router-dom';
-
 
 import BlogList from './BlogList';
 import Detail from "./Detail";
 import NotFoundPage from './NotFoundPage';
 import PostBlog from './PostBlog';
-import Test from './Test';
+import { Test, Parent } from './Test';
+import LoginVerifyProcess from './LoginVerifyProcess';
 import Login from './Login';
+import Dashboard from './Dashboard';
+
 
 function App() {
     return (
@@ -28,10 +30,22 @@ function App() {
                     <NotFoundPage/>
                 </Route>
                 <Route path="/post/:id?">
-                    <PostBlog/>
+                    <LoginVerifyProcess>
+                        <PostBlog/>
+                    </LoginVerifyProcess>
+                </Route>
+                <Route path="/login">
+                    <Login/>
+                </Route>
+                <Route path="/dashboard">
+                    <LoginVerifyProcess>
+                        <Dashboard/>
+                    </LoginVerifyProcess>
                 </Route>
                 <Route path="/test">
-                    <Login/>
+                    <Parent>
+                        <Test />
+                    </Parent>
                 </Route>
                 <Redirect to='/404'/>
             </Switch>

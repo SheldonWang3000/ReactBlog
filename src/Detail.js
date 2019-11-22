@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from "react-router-dom";
-import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import ReactMarkdown from 'react-markdown';
-import { globalVariable } from "./GlobalVariable";
+import { axiosInstance, verifyLogin } from "./Global";
 import hljs from 'highlight.js'
 import "highlight.js/styles/github.css";
 import { connect } from 'react-redux';
@@ -35,13 +34,14 @@ function Detail(props) {
     });
     const [showButtons, setShowButtons] = useState(false);
     useEffect(()=>{
-        if (props.access_token !== "" && props.refresh_token !== "") {
+        console.log("Detail: verity");
+        verifyLogin().then(() => {
             setShowButtons(true);
-        } else {
+        }).catch(() => {
             setShowButtons(false);
-        }
-    }, [props]);
-
+        });
+    },[]);
+    
     const classes = useStyles();
 
     useEffect(()=>{
@@ -51,7 +51,7 @@ function Detail(props) {
 
     useEffect(() => {
         if (deleteId !== -1) {
-            axios.delete(globalVariable.host + "/api/v1/posts/" + deleteId)
+            axiosInstance.delete(`/posts/${deleteId}/`)
             .then((response) => {
                 if (response.status === 204) {
                     history.push('/');
@@ -64,8 +64,8 @@ function Detail(props) {
     }, [deleteId, history]);
 
     useEffect(() => {
-        const url = globalVariable.host + "/api/v1/posts/" + id;
-        axios.get(url)
+        const url = `/posts/${id}/`;
+        axiosInstance.get(url)
             .then((response) => {
                 if (response.status === 200) {
                     return response.data;
@@ -79,7 +79,7 @@ function Detail(props) {
                 });
            })
             .catch((error) => {
-                // console.log(error.response);
+                console.log(error);
                 if (error.response.status === 404) {
                     history.push('/404');
                 }
@@ -110,7 +110,7 @@ function Detail(props) {
                 <Button
                     variant="contained" color="primary" className={classes.button}
                     onClick={() => {
-                        history.push("/post/" + id + "/");
+                        history.push(`/post/${id}/`);
                     }} >
                     Update
                 </Button>

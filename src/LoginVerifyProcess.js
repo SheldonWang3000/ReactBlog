@@ -1,20 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { verifyLogin} from './Global';
 import { useHistory } from 'react-router-dom';
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        display: 'flex',
-        '& > * + *': {
-            marginLeft: theme.spacing(2),
-        },
-    },
-}));
-
 function LoginVerifyProcess(props) {
-    const classes = useStyles();
     const history = useHistory();
     const [content, setContent] = useState(<CircularProgress/>);
     useEffect(() => {
@@ -32,7 +21,7 @@ function LoginVerifyProcess(props) {
     }, [history, props]);
 
     return (
-        <div className={classes.root}>
+        <div>
             {content}
         </div>
     );

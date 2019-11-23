@@ -16,9 +16,10 @@ import { axiosInstance } from './Global';
 
 
 const useStyles = makeStyles(theme => ({
+    root: {
+        padding: theme.spacing(1),
+    },
     textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
     },
     button: {
         margin: theme.spacing(1),
@@ -100,7 +101,7 @@ function PostBlog(props) {
     }
 
     return (
-        <div>
+        <div className={classes.root}>
             <TextField
                 id="blog-title"
                 label="Blog Title"

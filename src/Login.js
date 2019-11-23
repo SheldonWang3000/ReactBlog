@@ -35,6 +35,8 @@ function Login(props) {
                 console.log(response.data.access);
 
                 axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.access;
+                console.log('history');
+                console.log(history.location);
                 if (history.location.state === undefined || history.location.state.from === undefined || history.location.state.from === "") {
                     history.replace("/dashboard");
                 } else {

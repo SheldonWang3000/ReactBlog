@@ -1,40 +1,24 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import { clearToken } from './redux/actions';
-import { axiosInstance } from './Global';
+import { Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+    content: {
+        // marginTop: theme.spacing(10),
+    },
+}));
 
 function Dashboard(props) {
-    const history = useHistory();
+    const classes = useStyles();
     return (
         <div>
-            <Link to='/'>Blog List</Link>
-            <br />
-            <Link to='/post'>Create Blog</Link>
-            <br />
-            <Button
-                variant="contained" color="secondary"
-                onClick={(event) => {
-                    clearToken();
-                    axiosInstance.defaults.headers.common['Authorization'] = "";
-                    history.push('/');
-                }} >
-                Sign Out
-            </Button>
+            <div className={classes.content}>
+                <Link to='/'>Blog List</Link>
+                <br />
+                <Link to='/post'>Create Blog</Link>
+            </div>
         </div>
     );
 }
 
-// Map Redux state to component props
-function mapStateToProps(state) {
-    return state.loginToken;
-}
-
-// Map Redux actions to component props
-const mapDispatchToProps = {
-    clearToken,
-}
-
-// Connected Component
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default Dashboard;

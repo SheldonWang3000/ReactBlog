@@ -14,11 +14,26 @@ import { Test, Parent } from './Test';
 import LoginVerifyProcess from './LoginVerifyProcess';
 import Login from './Login';
 import Dashboard from './Dashboard';
+import NavigationBar from './NavigationBar';
 
 
 function App() {
     return (
         <Router>
+            <Switch>
+                <Route path="/posts/:id">
+                    <NavigationBar />
+                </Route>
+                <Route exact path="/">
+                    <NavigationBar />
+                </Route>
+                <Route path="/post/:id?">
+                    <NavigationBar />
+                </Route>
+                <Route path="/dashboard">
+                    <NavigationBar />
+                </Route>
+            </Switch>
             <Switch>
                 <Route path="/posts/:id">
                     <Detail/>

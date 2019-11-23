@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import { useParams, useHistory } from "react-router-dom";
 
+import { connect } from 'react-redux';
+
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -10,9 +12,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
-import { axiosInstance } from './Global'
+import { axiosInstance } from './Global';
 
-import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
     textField: {

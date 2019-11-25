@@ -1,28 +1,36 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
+import { Container, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import HomeIcon from '@material-ui/icons/Home';
-import { useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
-    button: {
-      margin: theme.spacing(1),
+    '@global': {
+        body: {
+            background: theme.palette.grey[100]
+        }
     },
-    input: {
-      display: 'none',
+    root: {
+        borderRadius: theme.shape.borderRadius * 2,
+        padding: theme.spacing(5),
+        marginTop: theme.spacing(20),
     },
+    content: {
+        color: theme.palette.text.secondary,
+    },
+    title: {
+        fontWeight: "bold",
+        color: theme.palette.text.primary,
+    }
   }));
 
 function NotFoundPage(props) {
     const classes = useStyles();
-    const history = useHistory();
     return (
-        <div>404 Page not found<br/>
-            We are sorry but the page you are looking for does not exist.
-            <IconButton className={classes.button} onClick={() => { history.push('/'); }}>
-                <HomeIcon />
-            </IconButton>
-        </div>
+        <Container component="div" maxWidth="xs" className={classes.root}>
+            <Typography bold variant="h3" align="left" className={classes.title}>404</Typography>
+            <Typography variant="h6" align="left" className={classes.content}>Sorry, we can’t find the page you were looking for.</Typography>
+            <Link to='/'>Go back to home page.</Link>
+        </Container>
     );
 }
 

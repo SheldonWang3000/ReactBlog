@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
-import Hidden from '@material-ui/core/Hidden';
-import Typography from '@material-ui/core/Typography';
+import { Paper, Button, Hidden, Typography } from '@material-ui/core';
 import ReactMarkdown from 'react-markdown';
 import { axiosInstance, verifyLogin } from "./Global";
 import hljs from 'highlight.js'
@@ -13,7 +10,7 @@ import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
     root: {
-        margin: theme.spacing(5, 5, 1, 5)
+        // margin: theme.spacing(2)
     },
     paper: {
         padding: theme.spacing(3, 2),

@@ -20,7 +20,6 @@ function createAxiosResponseInterceptor() {
                 }).then((response) => {
                     axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.access;
                     errorResponse.config.headers['Authorization'] = "Bearer " + response.data.access;
-                    console.log(errorResponse.config);
                     if (errorResponse.config.data !== undefined) {
                         var responseData = JSON.parse(errorResponse.config.data);
                         if (responseData.token !== undefined) responseData.token = response.data.access;

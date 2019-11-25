@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Avatar from '@material-ui/core/Avatar';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import { axiosInstance } from './Global';
 
@@ -10,10 +17,19 @@ import { updateToken } from './redux/actions';
 
 import { useHistory } from 'react-router-dom';
 
-
 const useStyles = makeStyles(theme => ({
+    main: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
     button: {
-        margin: theme.spacing(1, 0),
+        margin: theme.spacing(3, 0),
     },
 }));
 
@@ -29,15 +45,10 @@ function Login(props) {
                 password: password
             }).then((response) => {
                 props.updateToken(response.data.refresh);
-                console.log("refresh");
-                console.log(response.data.refresh);
-                console.log("access");
-                console.log(response.data.access);
-
                 axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.access;
-                console.log('history');
-                console.log(history.location);
-                if (history.location.state === undefined || history.location.state.from === undefined || history.location.state.from === "") {
+                if (history.location.state === undefined || 
+                    history.location.state.from === undefined || 
+                    history.location.state.from === "") {
                     history.replace("/dashboard");
                 } else {
                     history.replace({
@@ -49,19 +60,54 @@ function Login(props) {
             });
     };
     return (
-        <div>
-            <input id="username_input" onChange={(event)=>{
-                setUsername(event.target.value);
-            }} />
-            <br/>
-            <input id="password_input" type="password" onChange={(event)=>{
-                setPassword(event.target.value);
-            }} />
-            <br/>
+        <Container component='main' maxWidth='xs' >
+            <div className={classes.main}>
+                <Avatar className={classes.avatar}>
+                    <LockOpenIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                    Log in
+                </Typography>
+            </div>
+            <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                autoFocus
+                label="Username"
+                id="username_input" 
+                onChange={(event) => {
+                    setUsername(event.target.value);
+                }}/>
+            <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                autoComplete="current-password"
+                id="password_input" 
+                onChange={(event) => {
+                    setPassword(event.target.value);
+                }}
+            />
+            <FormControlLabel
+                control={<Checkbox color="primary" />}
+                label="Remember me"
+            />
             <Button
-                variant="contained" color="primary" className={classes.button}
-                onClick={loginFunc}>Login</Button>
-        </div>
+                variant="contained" 
+                color="primary" 
+                className={classes.button}
+                onClick={loginFunc}
+                fullWidth
+                >
+                Log in 
+            </Button>
+        </Container>
     );
 }
 

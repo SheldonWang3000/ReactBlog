@@ -15,6 +15,8 @@ import LoginVerifyProcess from './LoginVerifyProcess';
 import Login from './Login';
 import Dashboard from './Dashboard';
 import NavigationBar from './NavigationBar';
+import DashboardNavigationBar from './DashboardNavigationBar';
+import Copyright from './Copyright';
 
 
 function App() {
@@ -31,7 +33,7 @@ function App() {
                     <NavigationBar />
                 </Route>
                 <Route path="/dashboard">
-                    <NavigationBar />
+                    <DashboardNavigationBar />
                 </Route>
             </Switch>
             <Switch>
@@ -64,6 +66,7 @@ function App() {
                 </Route>
                 <Redirect to='/404'/>
             </Switch>
+            <Copyright/>
         </Router>
     );
 }

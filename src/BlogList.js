@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import { Grid } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
 import { TablePagination } from '@material-ui/core';
+import { Container } from '@material-ui/core';
+
 import { axiosInstance } from './Global';
 import { homePageNext, homePagePrev } from './redux/actions';
 
@@ -31,7 +33,7 @@ function Item(props) {
                 {props.publishDate}
             </Typography>
         </Paper>
-    )
+    );
 }
 
 function BlogList(props) {
@@ -65,7 +67,7 @@ function BlogList(props) {
     }, [url]);
 
     return (
-        <div>
+        <Container maxWidth="xl" component="main">
             <Grid container
                 className={classes.list}
                 direction="column"
@@ -93,10 +95,7 @@ function BlogList(props) {
                     }
                 }}
             />
-            <Link to='/dashboard'>test</Link>
-            <br/>
-            <Link to='/post/'>create</Link>
-        </div>
+        </Container>
     )
 }
 

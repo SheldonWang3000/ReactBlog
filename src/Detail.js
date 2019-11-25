@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Button, Hidden, Typography } from '@material-ui/core';
+import { Paper, Button, Hidden, Typography, Container } from '@material-ui/core';
 import ReactMarkdown from 'react-markdown';
 import { axiosInstance, verifyLogin } from "./Global";
 import hljs from 'highlight.js'
@@ -9,11 +9,12 @@ import "highlight.js/styles/github.css";
 import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        // margin: theme.spacing(2)
+    container: {
+        marginTop: theme.spacing(5),
+        marginBottom: theme.spacing(5),
     },
     paper: {
-        padding: theme.spacing(3, 2),
+        padding: theme.spacing(5, 3),
     },
     button: {
         margin: theme.spacing(1, 1, 1, 0),
@@ -83,16 +84,15 @@ function Detail(props) {
             });
     },[id, history]);
     return (
-        <div className={classes.root}>
+        <Container maxWidth="md" component="main" className={classes.container}>
             <Paper className={classes.paper}>
-                <Typography variant="h3" component="h3">
+                <Typography variant="h3" component="h3" margin='normal'>
                     {attri.title}
                 </Typography>
-                <Typography variant="subtitle1" color="textSecondary">
+                <Typography variant="subtitle1" color="textSecondary" margin='normal'>
                     Publish Date:  {attri.publishDate}
                 </Typography>
-                <br />
-                <Typography component="div">
+                <Typography component="p" margin='normal'>
                     <ReactMarkdown source={attri.content} />
                 </Typography>
             </Paper>
@@ -112,7 +112,7 @@ function Detail(props) {
                     Update
                 </Button>
             </Hidden>
-        </div>
+        </Container>
     );
 }
 // Map Redux state to component props

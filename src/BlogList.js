@@ -1,34 +1,59 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Grid, Typography, Paper, TablePagination, Container } from '@material-ui/core';
+import { Grid, Typography, Paper, TablePagination, Container, Link } from '@material-ui/core';
 
 import { axiosInstance } from './Global';
 import { homePageNext, homePagePrev } from './redux/actions';
 
 const useStyles = makeStyles(theme => ({
     list: {
-        // marginTop: theme.spacing(10),
+    },
+    content: {
+        padding: theme.spacing(5),
     },
     item: {
-      padding: theme.spacing(3, 2),
+        margin: theme.spacing(1, 0), 
+        borderRadius: theme.shape.borderRadius,
     },
+    link: {
+        borderTop: '1px solid rgba(0, 0, 0, 0.12)',
+        padding: theme.spacing(1, 5),
+        textTransform: 'uppercase',
+    }
 }));
+
+const ReadMoreLink = React.forwardRef((props, ref) => (
+    <RouterLink innerRef={ref} {...props} />
+));
 
 function Item(props) {
     const classes = useStyles();
     return (
         <Paper className={classes.item}>
-            <Link to={`/posts/${props.id}/`}>
-                <Typography variant='h6'>
+            <Container component="div" className={classes.content} maxWidth='md'>
+                <Typography variant='h5'>
                     {props.title}
                 </Typography>
-            </Link>
-            <Typography variant='subtitle2' color="textSecondary">
-                {props.publishDate}
+                <Typography variant='subtitle2' color="textSecondary">
+                    {props.publishDate}
+                </Typography>
+                <br/>
+                <Typography noWrap variant='body1' color="textSecondary">
+                    {props.abstract}
+                </Typography>
+            </Container>
+            <Typography className={classes.link}>
+                <Link 
+                    underline="none"
+                    color="secondary" 
+                    component={ReadMoreLink} 
+                    to={`/posts/${props.id}/`}>
+                    Read more...
+                </Link>
             </Typography>
         </Paper>
     );
@@ -65,7 +90,7 @@ function BlogList(props) {
     }, [url]);
 
     return (
-        <Container maxWidth="xl" component="main">
+        <Container maxWidth="md" component="main">
             <Grid container
                 className={classes.list}
                 direction="column"
@@ -75,6 +100,7 @@ function BlogList(props) {
                         id={value.id}
                         title={value.title}
                         publishDate={value.publish_date}
+                        abstract={value.abstract === undefined ? "Abstrat" : value.abstract}
                     />;
                 })}
             </Grid>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { CircularProgress } from '@material-ui/core';
 import { verifyLogin} from './Global';
 import { useHistory } from 'react-router-dom';
 

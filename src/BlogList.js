@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
-import { Typography } from '@material-ui/core';
-import { Paper } from '@material-ui/core';
-import { TablePagination } from '@material-ui/core';
-import { Container } from '@material-ui/core';
+
+import { Grid, Typography, Paper, TablePagination, Container } from '@material-ui/core';
 
 import { axiosInstance } from './Global';
 import { homePageNext, homePagePrev } from './redux/actions';

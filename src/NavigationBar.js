@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, InputBase } from '@material-ui/core';
@@ -16,6 +16,10 @@ const useStyles = makeStyles(theme => ({
     },
     title: {
         flexGrow: 1,
+    },
+    link: {
+        color: 'white',
+        textDecoration: 'none',
     },
     search: {
         position: 'relative',
@@ -65,9 +69,12 @@ function NavigationBar(props) {
         <div className={classes.header}>
             <AppBar position='fixed' >
                 <Toolbar>
-                    <Typography variant="h5"className={classes.title}>
-                        Sheldon's Blog
+                    <Typography variant="h5" className={classes.title}>
+                        <Link to='/' className={classes.link}>
+                            Sheldon's Blog
+                        </Link>
                     </Typography>
+
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />

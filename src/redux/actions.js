@@ -1,8 +1,9 @@
 import { 
     HOME_PAGE_NEXT, 
     HOME_PAGE_PREV,
-    UPDATE_TOKEN,
-    CLEAR_TOKEN,
+    HOME_PAGE_CLEAR,
+    TOKEN_UPDATE,
+    TOKEN_CLEAR,
 } from "./actionTypes";
 
 
@@ -18,9 +19,15 @@ export const homePagePrev = () => {
     })
 };
 
+export const homePageClear = () => {
+    return ({
+        type: HOME_PAGE_CLEAR,
+    })
+};
+
 export const updateToken = (refresh, access) => {
     return ({
-        type: UPDATE_TOKEN,
+        type: TOKEN_UPDATE,
         refresh_token: refresh,
         access_token: access
     });
@@ -28,7 +35,7 @@ export const updateToken = (refresh, access) => {
 
 export const clearToken = () => {
     return ({
-        type: CLEAR_TOKEN,
+        type: TOKEN_CLEAR,
         refresh_token: "",
         access_token: ""
     });

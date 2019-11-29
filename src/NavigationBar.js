@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, InputBase } from '@material-ui/core';
@@ -58,6 +59,7 @@ const useStyles = makeStyles(theme => ({
 function NavigationBar(props) {
     console.log('NavigationBar');
     const classes = useStyles();
+    const history = useHistory();
 
     return (
         <div className={classes.header}>
@@ -80,7 +82,8 @@ function NavigationBar(props) {
                             onKeyDown={(event)=>{
                                 if (event.keyCode=== 13)
                                 {
-                                    console.log(event.target.value);
+                                    const searchStr = event.target.value.replace(' ', ',');
+                                    history.push(`/${searchStr}`);
                                 }
                             }}
                             onBlur={(event) => { event.target.value = ""; }}

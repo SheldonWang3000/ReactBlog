@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 
 import { Grid, Typography, Paper, TablePagination, Container, Link } from '@material-ui/core';
 
 import { axiosInstance } from './Global';
-import { homePageNext, homePagePrev } from './redux/actions';
+import { homePageNext, homePagePrev, homePageClear } from './redux/actions';
 
 const useStyles = makeStyles(theme => ({
     list: {
@@ -62,13 +62,22 @@ function Item(props) {
 function BlogList(props) {
 
     const classes = useStyles();
+    const { search } = useParams();
+    
     const [attri, setAttri] = useState({
         blogArray: [],
         blogNum: 0,
         pageSize: 0
     });
 
-    const url = `/list/?page=${props.currentPageNum + 1}`;
+    let url;
+
+    if (search !== undefined) {
+        props.homePageClear();
+        url = `/list/?search=${search}`;
+    } else {
+        url = `/list/?page=${props.currentPageNum + 1}`;
+    }
 
     useEffect(() => {
         axiosInstance.get(url)
@@ -131,7 +140,8 @@ function mapStateToProps(state) {
 // Map Redux actions to component props
 const mapDispatchToProps = {
     homePageNext,
-    homePagePrev
+    homePagePrev,
+    homePageClear
 }
 
 // Connected Component

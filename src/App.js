@@ -32,15 +32,22 @@ function App() {
                 <Route path="/post/:id?">
                     <NavigationBar />
                 </Route>
+                <Route path="/:search">
+                    <NavigationBar />
+                </Route>
                 <Route path="/dashboard">
                     <DashboardNavigationBar />
                 </Route>
+
             </Switch>
             <Switch>
                 <Route path="/posts/:id">
                     <Detail/>
                 </Route>
                 <Route exact path="/">
+                    <BlogList/>
+                </Route>
+                <Route path="/:search">
                     <BlogList/>
                 </Route>
                 <Route path="/404">

@@ -2,7 +2,7 @@ import store from './redux/store';
 import axios from 'axios';
 
 export const axiosInstance = axios.create({
-    baseURL: "http://127.0.0.1:8000/api/v1/"
+    baseURL: "https://www.sheldonweb.com/api/v1/"
 });
 
 function createAxiosResponseInterceptor() {

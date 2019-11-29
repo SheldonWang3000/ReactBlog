@@ -32,7 +32,7 @@ function App() {
                 <Route path="/post/:id?">
                     <NavigationBar />
                 </Route>
-                <Route path="/:search">
+                <Route path="/search/:search">
                     <NavigationBar />
                 </Route>
                 <Route path="/dashboard">
@@ -47,7 +47,7 @@ function App() {
                 <Route exact path="/">
                     <BlogList/>
                 </Route>
-                <Route path="/:search">
+                <Route path="/search/:search">
                     <BlogList/>
                 </Route>
                 <Route path="/404">

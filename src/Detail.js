@@ -92,7 +92,7 @@ function Detail(props) {
                 <Typography variant="subtitle1" color="textSecondary" margin='normal'>
                     Publish Date:  {attri.publishDate}
                 </Typography>
-                <Typography component="p" margin='normal'>
+                <Typography component="div" margin='normal'>
                     <ReactMarkdown source={attri.content} />
                 </Typography>
             </Paper>

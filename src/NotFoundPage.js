@@ -27,7 +27,7 @@ function NotFoundPage(props) {
     const classes = useStyles();
     return (
         <Container component="div" maxWidth="xs" className={classes.root}>
-            <Typography bold variant="h3" align="left" className={classes.title}>404</Typography>
+            <Typography bold="true" variant="h3" align="left" className={classes.title}>404</Typography>
             <Typography variant="h6" align="left" className={classes.content}>Sorry, we can’t find the page you were looking for.</Typography>
             <Link to='/'>Go back to home page.</Link>
         </Container>

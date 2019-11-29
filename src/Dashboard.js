@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -10,12 +10,19 @@ const useStyles = makeStyles(theme => ({
 
 function Dashboard(props) {
     const classes = useStyles();
+    const location = useLocation();
     return (
         <div>
             <div className={classes.content}>
                 <Link to='/'>Blog List</Link>
                 <br />
-                <Link to='/post'>Create Blog</Link>
+                <Link to={{
+                    pathname: '/post',
+                    state: {
+                        from: location.pathname
+                    }
+                }}>
+                    Create Blog</Link>
             </div>
         </div>
     );

@@ -35,7 +35,15 @@ function PostBlog(props) {
 
     const handleAlertClose = () => {
         setAlertOpen(false);
-        history.push('/');
+        if (history.location.state === undefined || 
+            history.location.state.from === undefined || 
+            history.location.state.from === "") {
+            history.replace("/");
+        } else {
+            history.replace({
+                pathname: history.location.state.from, 
+                state: {}});
+        }
     }
 
     useEffect(()=>{

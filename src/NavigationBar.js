@@ -90,7 +90,7 @@ function NavigationBar(props) {
                                 if (event.keyCode=== 13)
                                 {
                                     const searchStr = event.target.value.replace(' ', ',');
-                                    history.push(`/${searchStr}`);
+                                    history.push(`/search/${searchStr}`);
                                 }
                             }}
                             onBlur={(event) => { event.target.value = ""; }}

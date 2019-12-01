@@ -42,7 +42,7 @@ function Item(props) {
                     {props.publishDate}
                 </Typography>
                 <br/>
-                <Typography noWrap variant='body1' color="textSecondary">
+                <Typography variant='body1' color="textSecondary">
                     {props.abstract}
                 </Typography>
             </Container>

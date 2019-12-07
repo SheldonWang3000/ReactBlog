@@ -16,6 +16,7 @@ import Login from './Login';
 import Dashboard from './Dashboard';
 import NavigationBar from './NavigationBar';
 import DashboardNavigationBar from './DashboardNavigationBar';
+import PrivacyPolicy from './PrivacyPolicy';
 import Copyright from './Copyright';
 
 
@@ -70,6 +71,9 @@ function App() {
                     <Parent>
                         <Test />
                     </Parent>
+                </Route>
+                <Route path="/privacy-policy">
+                    <PrivacyPolicy/>
                 </Route>
                 <Redirect to='/404'/>
             </Switch>

@@ -10,7 +10,6 @@ import BlogList from './BlogList';
 import Detail from "./Detail";
 import NotFoundPage from './NotFoundPage';
 import PostBlog from './PostBlog';
-import { Test, Parent } from './Test';
 import LoginVerifyProcess from './LoginVerifyProcess';
 import Login from './Login';
 import Dashboard from './Dashboard';
@@ -18,6 +17,7 @@ import NavigationBar from './NavigationBar';
 import DashboardNavigationBar from './DashboardNavigationBar';
 import PrivacyPolicy from './PrivacyPolicy';
 import Copyright from './Copyright';
+import SocialLogin from './SocialLogin';
 
 
 function App() {
@@ -68,9 +68,7 @@ function App() {
                     </LoginVerifyProcess>
                 </Route>
                 <Route path="/test">
-                    <Parent>
-                        <Test />
-                    </Parent>
+                    <SocialLogin/>
                 </Route>
                 <Route path="/privacy-policy">
                     <PrivacyPolicy/>

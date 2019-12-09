@@ -1,37 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { Button, ButtonGroup, Avatar } from '@material-ui/core';
+import { defaultUser } from './GlobalVariable';
+import { connect } from 'react-redux';
+import { commentAccountSave, commentAccountClear } from './redux/actions';
 
 const gapi = window.gapi;
-const defaultUser = {
-    "buttonMsg": "google",
-    "username": "User",
-    "avatarUrl": "https://www.sheldonweb.com/media/default_avatar.png"
-};
 
-
-function SocialLogin() {
+function SocialLogin(props) {
     console.log("SocialLogin");
     const [user, setUser] = useState(defaultUser);
-    
-    const makeRequest = () => {
-        gapi.client.people.people.get({
-            'resourceName': 'people/me',
-            'personFields': 'names,photos'
-        }).then(function (resp) {
-            var name = resp.result.names[0].givenName;
-            var avatarUrl = resp.result.photos[0].url;
-            setUser({ "buttonMsg": "SignOut", "username": name, "avatarUrl": avatarUrl });
-        });
-    }
 
-    useEffect(()=>{
+    useEffect(() => {
         const signIn = () => {
-            makeRequest();
+            gapi.client.people.people.get({
+                'resourceName': 'people/me',
+                'personFields': 'names,photos'
+            }).then(function (resp) {
+                var name = resp.result.names[0].givenName;
+                var avatarUrl = resp.result.photos[0].url;
+                setUser({ "buttonMsg": "SignOut", "username": name, "avatarUrl": avatarUrl });
+                props.commentAccountSave(name, avatarUrl);
+            });
         }
 
         const signOut = () => {
             setUser(defaultUser);
+            props.commentAccountClear();
         }
+
         gapi.load('client:auth2', () => {
             gapi.client.init({
                 apiKey: '***REMOVED***',
@@ -53,7 +49,7 @@ function SocialLogin() {
                 });
             });
         });
-    }, []);
+    }, [props]);
 
     return (
         <div>
@@ -67,12 +63,22 @@ function SocialLogin() {
                 }}>{user['buttonMsg']}
                 </Button>
             </ButtonGroup>
-            <br/>
+            <br />
             {user['username']}
-            <br/>
-            <Avatar src={user['avatarUrl']}/>
+            <br />
+            <Avatar src={user['avatarUrl']} />
         </div>
     );
 }
 
-export default SocialLogin;
+// Map Redux actions to component props
+const mapDispatchToProps = {
+    commentAccountSave,
+    commentAccountClear,
+}
+
+// Connected Component
+export default connect(
+    null,
+    mapDispatchToProps
+)(SocialLogin);

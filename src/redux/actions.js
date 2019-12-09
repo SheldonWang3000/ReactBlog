@@ -4,8 +4,23 @@ import {
     HOME_PAGE_CLEAR,
     TOKEN_UPDATE,
     TOKEN_CLEAR,
+    COMMENT_ACCOUNT_SAVE,
+    COMMENT_ACCOUNT_CLEAR,
 } from "./actionTypes";
 
+export const commentAccountSave = (username, avatarUrl) => {
+    return ({
+        type: COMMENT_ACCOUNT_SAVE,
+        username: username,
+        avatarUrl: avatarUrl
+    });
+}
+
+export const commentAccountClear = () => {
+    return ({
+        type: COMMENT_ACCOUNT_CLEAR,
+    });
+}
 
 export const homePageNext = () => {
     return ({
@@ -16,13 +31,13 @@ export const homePageNext = () => {
 export const homePagePrev = () => {
     return ({
         type: HOME_PAGE_PREV,
-    })
+    });
 };
 
 export const homePageClear = () => {
     return ({
         type: HOME_PAGE_CLEAR,
-    })
+    });
 };
 
 export const updateToken = (refresh, access) => {

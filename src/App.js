@@ -17,8 +17,8 @@ import NavigationBar from './NavigationBar';
 import DashboardNavigationBar from './DashboardNavigationBar';
 import PrivacyPolicy from './PrivacyPolicy';
 import Copyright from './Copyright';
-import SocialLogin from './SocialLogin';
-
+import CommentInput from './CommentInput';
+import CommentList from './CommentList';
 
 function App() {
     return (
@@ -68,7 +68,7 @@ function App() {
                     </LoginVerifyProcess>
                 </Route>
                 <Route path="/test">
-                    <SocialLogin/>
+                    <CommentList url="https://www.sheldonweb.com/api/v1/comments/blog/1/" blog={1}/>
                 </Route>
                 <Route path="/privacy-policy">
                     <PrivacyPolicy/>

@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Button, ButtonGroup, Avatar } from '@material-ui/core';
+import { Button, ButtonGroup, Avatar, Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { defaultUser } from './GlobalVariable';
 import { connect } from 'react-redux';
 import { commentAccountSave, commentAccountClear } from './redux/actions';
 
 const gapi = window.gapi;
 
+const useStyles = makeStyles(theme => ({
+    container: {
+        // float: 'left',
+        // width: 'auto',
+        // padding: '0px',
+    },
+}));
+
 function SocialLogin(props) {
     console.log("SocialLogin");
+    const classes = useStyles();
     const [user, setUser] = useState(defaultUser);
 
     useEffect(() => {
@@ -52,22 +62,27 @@ function SocialLogin(props) {
     }, [props]);
 
     return (
-        <div>
-            <ButtonGroup>
-                <Button onClick={() => {
-                    if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
-                        gapi.auth2.getAuthInstance().signOut();
-                    } else {
-                        gapi.auth2.getAuthInstance().signIn();
-                    }
-                }}>{user['buttonMsg']}
-                </Button>
-            </ButtonGroup>
-            <br />
-            {user['username']}
-            <br />
-            <Avatar src={user['avatarUrl']} />
-        </div>
+        <Grid container direction="column" alignItems="center">
+            <Grid item>
+                <ButtonGroup>
+                    <Button onClick={() => {
+                        if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
+                            gapi.auth2.getAuthInstance().signOut();
+                        } else {
+                            gapi.auth2.getAuthInstance().signIn();
+                        }
+                    }}>{user['buttonMsg']}
+                    </Button>
+                </ButtonGroup>
+
+            </Grid>
+            <Grid item>
+                {user['username']}
+            </Grid>
+            <Grid item>
+                <Avatar src={user['avatarUrl']} />
+            </Grid>
+        </Grid>
     );
 }
 

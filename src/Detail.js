@@ -7,6 +7,7 @@ import { axiosInstance, verifyLogin } from "./Global";
 import hljs from 'highlight.js'
 import "highlight.js/styles/github.css";
 import { connect } from 'react-redux';
+import CommentList from './CommentList';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -28,7 +29,8 @@ function Detail(props) {
     const [attri, setAttri] = useState({
         publishDate: "",
         title: "",
-        content: ""
+        content: "",
+        commentUrl: ""
     });
     const [showButtons, setShowButtons] = useState(false);
     useEffect(()=>{
@@ -73,12 +75,13 @@ function Detail(props) {
                 setAttri({
                     publishDate: data.publish_date,
                     title: data.title,
-                    content: data.content
+                    content: data.content,
+                    commentUrl: data.comments
                 });
            })
             .catch((error) => {
                 console.log(error);
-                if (error.response.status === 404) {
+                if (error.response && error.response.status === 404) {
                     history.push('/404');
                 }
             });
@@ -96,6 +99,7 @@ function Detail(props) {
                     <ReactMarkdown source={attri.content} />
                 </Typography>
             </Paper>
+            <CommentList blog={id} url={attri.commentUrl}/>
             <Hidden lgDown={!showButtons}>
                 <Button
                     variant="contained" color="secondary" className={classes.button}

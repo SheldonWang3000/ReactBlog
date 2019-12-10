@@ -76,7 +76,6 @@ function PostBlog(props) {
             axiosInstance.post(url, {
                 title: title,
                 content: content,
-                user: 1
             }
             ).then((response) => {
                 setAlertMessage("You have created blog successfully!");

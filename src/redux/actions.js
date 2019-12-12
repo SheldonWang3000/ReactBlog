@@ -6,7 +6,22 @@ import {
     TOKEN_CLEAR,
     COMMENT_ACCOUNT_SAVE,
     COMMENT_ACCOUNT_CLEAR,
+    COMMENT_TOGGLE_SAVE,
+    COMMENT_TOGGLE_CLEAR,
 } from "./actionTypes";
+
+export const commentToggleSave = (id) => {
+    return ({
+        type: COMMENT_TOGGLE_SAVE,
+        commentToggleId: id 
+    });
+}
+
+export const commentToggleClear = () => {
+    return ({
+        type: COMMENT_TOGGLE_CLEAR
+    });
+}
 
 export const commentAccountSave = (username, avatarUrl) => {
     return ({

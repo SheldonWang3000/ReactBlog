@@ -7,15 +7,33 @@ import {
     TOKEN_CLEAR,
     COMMENT_ACCOUNT_SAVE,
     COMMENT_ACCOUNT_CLEAR,
+    COMMENT_TOGGLE_SAVE,
+    COMMENT_TOGGLE_CLEAR,
 } from './actionTypes'
 import { defaultUser } from '../GlobalVariable';
+
+function commentToggleId(state = { commentToggleId: -1 }, action) {
+    switch (action.type) {
+        case COMMENT_TOGGLE_SAVE: {
+            return { ...state, commentToggleId: action.commentToggleId };
+        }
+        case COMMENT_TOGGLE_CLEAR: {
+            return { ...state, commentToggleId: -1 };
+        }
+        default: {
+            return state;
+        }
+    }
+}
 
 function commentAccount(state = { username: defaultUser.username, avatarUrl: defaultUser.avatarUrl }, action) {
     switch (action.type) {
         case COMMENT_ACCOUNT_SAVE: {
             return { ...state, username: action.username, avatarUrl: action.avatarUrl };
         }
-        case COMMENT_ACCOUNT_CLEAR:
+        case COMMENT_ACCOUNT_CLEAR: {
+            return { ...state, username: defaultUser.username, avatarUrl: defaultUser.avatarUrl };
+        }
         default: {
             return state;
         }
@@ -57,4 +75,4 @@ function loginToken(state = { refresh_token: "" }, action) {
     }
 }
 
-export default combineReducers({ homePagination, loginToken, commentAccount });
+export default combineReducers({ homePagination, loginToken, commentAccount, commentToggleId });

@@ -17,10 +17,15 @@ import NavigationBar from './NavigationBar';
 import DashboardNavigationBar from './DashboardNavigationBar';
 import PrivacyPolicy from './PrivacyPolicy';
 import Copyright from './Copyright';
-import CommentInput from './CommentInput';
 import CommentList from './CommentList';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    background: theme.palette.primary
+}));
 
 function App() {
+    const classes = useStyles();
     return (
         <Router>
             <Switch>
@@ -43,7 +48,7 @@ function App() {
             </Switch>
             <Switch>
                 <Route path="/posts/:id">
-                    <Detail/>
+                    <Detail className={classes.background}/>
                 </Route>
                 <Route exact path="/">
                     <BlogList/>
@@ -69,6 +74,7 @@ function App() {
                 </Route>
                 <Route path="/test">
                     <CommentList url="https://www.sheldonweb.com/api/v1/comments/blog/1/" blog={1}/>
+                    {/* <SocialLogin/> */}
                 </Route>
                 <Route path="/privacy-policy">
                     <PrivacyPolicy/>

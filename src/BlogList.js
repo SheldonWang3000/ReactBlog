@@ -10,14 +10,11 @@ import { axiosInstance } from './Global';
 import { homePageNext, homePagePrev, homePageClear } from './redux/actions';
 
 const useStyles = makeStyles(theme => ({
-    list: {
-    },
     content: {
         padding: theme.spacing(5),
     },
     item: {
         margin: theme.spacing(1, 0), 
-        borderRadius: theme.shape.borderRadius,
     },
     link: {
         borderTop: '1px solid rgba(0, 0, 0, 0.12)',
@@ -61,7 +58,6 @@ function Item(props) {
 
 function BlogList(props) {
 
-    const classes = useStyles();
     const { search } = useParams();
     
     const [attri, setAttri] = useState({
@@ -101,7 +97,6 @@ function BlogList(props) {
     return (
         <Container maxWidth="md" component="main">
             <Grid container
-                className={classes.list}
                 direction="column"
                 alignItems="stretch">
                 {attri.blogArray.map((value, index) => {

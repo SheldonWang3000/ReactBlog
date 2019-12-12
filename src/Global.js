@@ -5,6 +5,23 @@ export const axiosInstance = axios.create({
     baseURL: "https://www.sheldonweb.com/api/v1/"
 });
 
+export const gapiRequest = () => new Promise((resolve, reject) => {
+    if (window.gapi.auth2 === undefined) {
+        window.gapi.load('client:auth2', () => {
+            window.gapi.client.init({
+                apiKey: '***REMOVED***',
+                discoveryDocs: ["https://people.googleapis.com/$discovery/rest?version=v1"],
+                clientId: '***REMOVED***',
+                scope: 'profile'
+            }).then(function () {
+                resolve();
+            });
+        });
+    } else {
+        resolve();
+    }
+});
+
 function createAxiosResponseInterceptor() {
     const interceptor = axiosInstance.interceptors.response.use(
         response => response,

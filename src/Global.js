@@ -2,7 +2,8 @@ import store from './redux/store';
 import axios from 'axios';
 
 export const axiosInstance = axios.create({
-    baseURL: "https://www.sheldonweb.com/api/v1/"
+    baseURL: "https://www.sheldonweb.com/api/v1/",
+    timeout: 1000
 });
 
 export const gapiRequest = () => new Promise((resolve, reject) => {

@@ -32,17 +32,22 @@ function PostBlog(props) {
     const [content, setContent] = useState("");
     const [buttonMsg, setButtonMsg] = useState("post");
 
+    console.log(history.location.state);
 
     const handleAlertClose = () => {
         setAlertOpen(false);
+        console.log(history.location.state)
         if (history.location.state === undefined || 
             history.location.state.from === undefined || 
-            history.location.state.from === "") {
+            history.location.state.from.length === 0) {
             history.replace("/");
         } else {
             history.replace({
-                pathname: history.location.state.from, 
-                state: {}});
+                pathname: history.location.state.from[0], 
+                state: {
+                    ...history.location.state,
+                    from: history.location.state.from.slice(1)
+                }});
         }
     }
 

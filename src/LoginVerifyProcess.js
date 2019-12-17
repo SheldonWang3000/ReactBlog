@@ -5,17 +5,22 @@ import { useHistory } from 'react-router-dom';
 
 function LoginVerifyProcess(props) {
     const history = useHistory();
+    console.log(history.location.pathname);
     const [content, setContent] = useState(<CircularProgress/>);
     useEffect(() => {
         verifyLogin().then(()=>{
             setContent(props.children);
         }).catch(()=>{
             console.log("LoginVerifyProcess: Unauthorized");
+            let fromList = [];
+            if (history.location !== undefined && history.location.state !== undefined && history.location.state.from !== undefined) {
+                fromList = history.location.state.from;
+            }
             if (props.to === undefined) {
-                history.push({pathname: '/login', state: {'from': history.location.pathname}}); 
+                history.push({ pathname: '/login', state: { from: [history.location.pathname, ...fromList] } }); 
             }
             else {
-                history.push({pathname: props.to, state: {'from': history.location.pathname}}); 
+                history.push({ pathname: props.to, state: { from: [history.location.pathname, ...fromList] } }); 
             }
         });
     }, [history, props]);

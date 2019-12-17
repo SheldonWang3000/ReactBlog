@@ -48,12 +48,15 @@ function Login(props) {
                 axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.access;
                 if (history.location.state === undefined || 
                     history.location.state.from === undefined || 
-                    history.location.state.from === "") {
+                    history.location.state.from.length === 0) {
                     history.replace("/dashboard");
                 } else {
                     history.replace({
-                        pathname: history.location.state.from, 
-                        state: {}});
+                        pathname: history.location.state.from[0], 
+                        state: {
+                            ...history.location.state, 
+                            from: history.location.state.from.slice(1)
+                        }});
                 }
             }).catch((e) => {
                 console.log(e);

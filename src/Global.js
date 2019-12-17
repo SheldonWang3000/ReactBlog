@@ -30,7 +30,7 @@ function createAxiosResponseInterceptor() {
                 return Promise.reject(error);
             }
             let errorResponse = error.response;
-            if (errorResponse.status === 401) {
+            if (errorResponse !== undefined && errorResponse.status === 401) {
                 axiosInstance.interceptors.response.eject(interceptor);
                 return axiosInstance.post('/refresh/', {
                     'refresh': store.getState().loginToken.refresh_token

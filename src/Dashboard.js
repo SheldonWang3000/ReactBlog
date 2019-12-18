@@ -96,7 +96,12 @@ function Dashboard(props) {
         // clear controlled component
         setCheckedArray([]);
         setAttri(defaultAttri);
-        setUrl(url.split("?")[0] + '?' + urlObject.toString());
+        if (urlObject.toString() === "") {
+            setUrl(url.split("?")[0]);
+        }
+        else {
+            setUrl(url.split("?")[0] + '?' + urlObject.toString());
+        }
     }, [url, order])
 
     return (

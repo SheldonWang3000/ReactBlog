@@ -27,15 +27,10 @@ function createAxiosResponseInterceptor() {
     const interceptor = axiosInstance.interceptors.response.use(
         response => response,
         (error) => {
-            if (store.getState().loginToken.access_token === "") {
-                return Promise.reject(error);
-            }
             let errorResponse = error.response;
             if (errorResponse !== undefined && errorResponse.status === 401) {
                 axiosInstance.interceptors.response.eject(interceptor);
-                return axiosInstance.post('/refresh/', {
-                    'refresh': store.getState().loginToken.refresh_token
-                }).then((response) => {
+                return axiosInstance.post('/refresh/', { withCredentials: true }).then((response) => {
                     axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.access;
                     errorResponse.config.headers['Authorization'] = "Bearer " + response.data.access;
                     if (errorResponse.config.data !== undefined) {
@@ -56,15 +51,16 @@ function createAxiosResponseInterceptor() {
 createAxiosResponseInterceptor();
 
 export const verifyLogin = () => new Promise((resolve, reject) => {
-    if (store.getState().loginToken.refresh_token === "") {
+    console.log("verifyPromise")
+    const token = axiosInstance.defaults.headers.common['Authorization'] === undefined ? "*" :
+        axiosInstance.defaults.headers.common['Authorization'].split(' ')[1];
+
+    console.log(token);
+    axiosInstance.post("/token/verify/", {
+        token: token
+    }).then(() => {
+        resolve();
+    }).catch(() => {
         reject();
-    } else {
-        axiosInstance.post("/token/verify/", {
-            token: axiosInstance.defaults.headers.common['Authorization'].split(' ')[1]
-        }).then(() => {
-            resolve();
-        }).catch(() => {
-            reject();
-        });
-    }
+    });
 });

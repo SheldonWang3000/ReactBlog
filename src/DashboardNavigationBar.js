@@ -4,9 +4,6 @@ import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Button, Typography } from '@material-ui/core';
 
-import { connect } from 'react-redux';
-import { clearToken } from './redux/actions';
-
 import { axiosInstance, verifyLogin } from './Global';
 
 const useStyles = makeStyles(theme => ({
@@ -72,10 +69,4 @@ function NavigationBar(props) {
     );
 }
 
-// Map Redux actions to component props
-const mapDispatchToProps = {
-    clearToken,
-}
-
-// Connected Component
-export default connect(null, mapDispatchToProps)(NavigationBar);
+export default NavigationBar;

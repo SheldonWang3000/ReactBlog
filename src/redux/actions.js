@@ -2,8 +2,6 @@ import {
     HOME_PAGE_NEXT, 
     HOME_PAGE_PREV,
     HOME_PAGE_CLEAR,
-    TOKEN_UPDATE,
-    TOKEN_CLEAR,
     COMMENT_ACCOUNT_SAVE,
     COMMENT_ACCOUNT_CLEAR,
     COMMENT_TOGGLE_SAVE,
@@ -54,19 +52,3 @@ export const homePageClear = () => {
         type: HOME_PAGE_CLEAR,
     });
 };
-
-export const updateToken = (refresh, access) => {
-    return ({
-        type: TOKEN_UPDATE,
-        refresh_token: refresh,
-        access_token: access
-    });
-}
-
-export const clearToken = () => {
-    return ({
-        type: TOKEN_CLEAR,
-        refresh_token: "",
-        access_token: ""
-    });
-}

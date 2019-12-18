@@ -12,9 +12,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import { axiosInstance } from './Global';
 
-import { connect } from 'react-redux';
-import { updateToken } from './redux/actions';
-
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
@@ -44,7 +41,7 @@ function Login(props) {
                 username: username,
                 password: password
             }).then((response) => {
-                props.updateToken(response.data.refresh);
+                console.log(response.data);
                 axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.access;
                 if (history.location.state === undefined || 
                     history.location.state.from === undefined || 
@@ -114,19 +111,4 @@ function Login(props) {
     );
 }
 
-// Map Redux state to component props
-function mapStateToProps(state) {
-    return state.loginToken;
-}
-
-// Map Redux actions to component props
-const mapDispatchToProps = {
-    updateToken,
-}
-
-// Connected Component
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Login);
-// export default Login;
+export default Login;

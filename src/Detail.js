@@ -6,7 +6,6 @@ import ReactMarkdown from 'react-markdown';
 import { axiosInstance, verifyLogin } from "./Global";
 import hljs from 'highlight.js'
 import "highlight.js/styles/github.css";
-import { connect } from 'react-redux';
 import CommentList from './CommentList';
 
 const useStyles = makeStyles(theme => ({
@@ -119,10 +118,5 @@ function Detail(props) {
         </Container>
     );
 }
-// Map Redux state to component props
-function mapStateToProps(state) {
-    return state.loginToken;
-}
 
-// Connected Component
-export default connect(mapStateToProps)(Detail);
+export default Detail;

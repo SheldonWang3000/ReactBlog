@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 import { useParams, useHistory } from "react-router-dom";
 
-import { connect } from 'react-redux';
-
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Button, Dialog, DialogActions, DialogContent, DialogContentText } from '@material-ui/core';
 
@@ -160,10 +158,5 @@ function PostBlog(props) {
         </div>
     );
 }
-// Map Redux state to component props
-function mapStateToProps(state) {
-    return state.loginToken;
-}
 
-// Connected Component
-export default connect(mapStateToProps)(PostBlog);
+export default PostBlog;

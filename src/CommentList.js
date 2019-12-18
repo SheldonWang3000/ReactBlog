@@ -7,6 +7,9 @@ import CommentInput from './CommentInput';
 import { commentToggleSave, commentToggleClear } from './redux/actions';
 
 const useStyles = makeStyles(theme => ({
+    deleteLabel: {
+        marginLeft: theme.spacing(1)
+    },
     newComment: {
         marginTop: theme.spacing(1)
     },
@@ -69,6 +72,28 @@ function Item(props) {
                         >
                             reply
                         </Link>
+                        <Hidden lgDown={props.lgDown}>
+                            <Link
+                                className={classes.deleteLabel}
+                                href="#"
+                                color="textSecondary"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    console.log(props.obj.id);
+                                    axiosInstance.delete(`/comments/${props.obj.id}/`)
+                                        .then((response)=>{
+                                            if (response.status === 204) {
+                                                props.refreshCallback(Date.now());
+                                            }
+                                        })
+                                        .catch((error)=>{
+                                            console.log(error);
+                                        })
+                                }}
+                            >
+                                delete
+                            </Link>
+                        </Hidden>
                         <Hidden lgDown={props.obj.id !== props.commentToggleId}>
                             <CommentInput id={props.obj.id} blog={props.blog} refreshCallback={(value)=>{
                                 props.commentToggleClear();
@@ -155,7 +180,7 @@ function CommentList(props) {
                                 {attri.results.map((value, index) => {
                                     return (
                                         <Grid item key={index}>
-                                            <ReduxItem obj={value} blog={props.blog} refreshCallback={setTime}></ReduxItem>
+                                            <ReduxItem lgDown={props.lgDown} obj={value} blog={props.blog} refreshCallback={setTime}></ReduxItem>
                                         </Grid>
                                     );
                                 })}

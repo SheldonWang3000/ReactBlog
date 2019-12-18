@@ -99,7 +99,6 @@ function Detail(props) {
                     <ReactMarkdown source={attri.content} />
                 </Typography>
             </Paper>
-            <CommentList blog={id} url={attri.commentUrl}/>
             <Hidden lgDown={!showButtons}>
                 <Button
                     variant="contained" color="secondary" className={classes.button}
@@ -116,6 +115,7 @@ function Detail(props) {
                     Update
                 </Button>
             </Hidden>
+            <CommentList lgDown={!showButtons} blog={id} url={attri.commentUrl}/>
         </Container>
     );
 }

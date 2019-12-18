@@ -253,7 +253,19 @@ function Dashboard(props) {
                                         id = {value.id.toString()}
                                         checked={value.sticky} 
                                         onChange={(event)=>{
+                                            console.log(event.target.checked)
                                             console.log(event.target.id);
+                                            axiosInstance.patch(`/sticky/${value.id}/`, {'sticky': event.target.checked})
+                                                .then((response)=>{
+                                                    if (response.status === 200) {
+                                                        setCheckedArray([]);
+                                                        setAttri(defaultAttri);
+                                                        setTime(Date.now());
+                                                    }
+                                                })
+                                                .catch((error)=>{
+                                                    console.log(error);
+                                                });
                                         }}/>
                                 </TableCell>
                             </TableRow>

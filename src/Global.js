@@ -1,5 +1,6 @@
 import store from './redux/store';
 import axios from 'axios';
+import { googleConfig } from './Keys';
 
 export const axiosInstance = axios.create({
     baseURL: "https://www.sheldonweb.com/api/v1/",
@@ -10,9 +11,9 @@ export const gapiRequest = () => new Promise((resolve, reject) => {
     if (window.gapi.auth2 === undefined) {
         window.gapi.load('client:auth2', () => {
             window.gapi.client.init({
-                apiKey: '***REMOVED***',
+                apiKey: googleConfig.apiKey,
                 discoveryDocs: ["https://people.googleapis.com/$discovery/rest?version=v1"],
-                clientId: '***REMOVED***',
+                clientId: googleConfig.clientId,
                 scope: 'profile'
             }).then(function () {
                 resolve();

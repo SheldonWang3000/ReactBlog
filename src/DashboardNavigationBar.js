@@ -38,10 +38,17 @@ function NavigationBar(props) {
         const signoutButton = {
             msg: "Sign Out",
             func: () => {
-                props.clearToken();
-                axiosInstance.defaults.headers.common['Authorization'] = "";
-                setButtonAttri(loginButton);
-                history.push('/');
+                axiosInstance.get('/token/delete/')
+                    .then((response)=>{
+                        if (response.status === 200) {
+                            axiosInstance.defaults.headers.common['Authorization'] = "";
+                            setButtonAttri(loginButton);
+                            history.push('/');
+                        }
+                    })
+                    .catch((error)=>{
+                        console.log(error);
+                    });
             }
         }
         verifyLogin().then(() => {

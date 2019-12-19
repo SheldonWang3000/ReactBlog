@@ -3,8 +3,8 @@ import axios from 'axios';
 import { googleConfig } from './Keys';
 
 export const axiosInstance = axios.create({
+    // baseURL: "http://localhost:8000/api/v1/",
     baseURL: "https://www.sheldonweb.com/api/v1/",
-    timeout: 1000
 });
 
 export const gapiRequest = () => new Promise((resolve, reject) => {
@@ -52,11 +52,9 @@ function createAxiosResponseInterceptor() {
 createAxiosResponseInterceptor();
 
 export const verifyLogin = () => new Promise((resolve, reject) => {
-    console.log("verifyPromise")
     const token = axiosInstance.defaults.headers.common['Authorization'] === undefined ? "*" :
         axiosInstance.defaults.headers.common['Authorization'].split(' ')[1];
 
-    console.log(token);
     axiosInstance.post("/token/verify/", {
         token: token
     }).then(() => {

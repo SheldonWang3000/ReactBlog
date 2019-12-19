@@ -36,28 +36,27 @@ function Login(props) {
     const [password, setPassword] = useState("");
     const classes = useStyles();
     const loginFunc = () => {
-        const url = "/token/";
-            axiosInstance.post(url, {
-                username: username,
-                password: password
-            }).then((response) => {
-                console.log(response.data);
-                axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.access;
-                if (history.location.state === undefined || 
-                    history.location.state.from === undefined || 
-                    history.location.state.from.length === 0) {
-                    history.replace("/dashboard");
-                } else {
-                    history.replace({
-                        pathname: history.location.state.from[0], 
-                        state: {
-                            ...history.location.state, 
-                            from: history.location.state.from.slice(1)
-                        }});
-                }
-            }).catch((e) => {
-                console.log(e);
-            });
+        axiosInstance.post('/token/', {
+            username: username,
+            password: password
+        }).then((response) => {
+            axiosInstance.defaults.headers.common['Authorization'] = "Bearer " + response.data.access;
+            if (history.location.state === undefined ||
+                history.location.state.from === undefined ||
+                history.location.state.from.length === 0) {
+                history.replace("/dashboard");
+            } else {
+                history.replace({
+                    pathname: history.location.state.from[0],
+                    state: {
+                        ...history.location.state,
+                        from: history.location.state.from.slice(1)
+                    }
+                });
+            }
+        }).catch((e) => {
+            console.log(e);
+        });
     };
     return (
         <Container component='main' maxWidth='xs' >
